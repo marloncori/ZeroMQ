@@ -13,10 +13,11 @@ def try_request(context, endpoint, request):
    client = context.socket(zmq.REQ)
    client.setsockopt(zmq.LINGER, 0)
    client.connect(endpoint)
-   client.send(request)
+   print("[try_request] --> ", request)
+   client.send_string(request)
    poll = zmq.Poller()
    poll.register(client, zmq.POLLIN)
-   socks = dict(poll.pool(REQ_TIMEOUT))
+   socks = dict(poll.poll(REQ_TIMEOUT))
    if socks.get(client) == zmq.POLLIN:
       reply = client.recv_multipart()
    else:
@@ -32,7 +33,7 @@ context = zmq.Context()
 requet = None
 reply = None
 
-endpoins = len(sys.argv) - 1
+endpoints = len(sys.argv) - 1
 if endpoints == 0:
     print( " --> USAGE:\n\t %s <endpoint> ..." % sys.argv[0])
 elif endpoints == 1:
@@ -40,6 +41,7 @@ elif endpoints == 1:
     for retries in xrange(MAX_RETRIES):
         request = choice(cmds)
         reply = try_request(context, endpoint, request)
+        print(request)
         if reply:
             break # success
         print(" WARNING: No response from %s, retrying to reach it..." % endpoint)
