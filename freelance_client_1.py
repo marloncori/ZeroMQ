@@ -38,7 +38,7 @@ if endpoints == 0:
     print( " --> USAGE:\n\t %s <endpoint> ..." % sys.argv[0])
 elif endpoints == 1:
     endpoint = sys.argv[1]
-    for retries in xrange(MAX_RETRIES):
+    for retries in range(MAX_RETRIES):
         request = choice(cmds)
         reply = try_request(context, endpoint, request)
         print(request)
