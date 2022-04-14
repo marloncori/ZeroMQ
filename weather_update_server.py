@@ -4,8 +4,8 @@ from time import sleep
 
 PORT = 5556
 context = zmq.Context()
-socket = context.socket(zqm.PUB)
-socket.bin("tcp://*:" + str(PORT))
+socket = context.socket(zmq.PUB)
+socket.bind("tcp://*:" + str(PORT))
 
 while True:
   zipcode = randrange(1, 44100)
