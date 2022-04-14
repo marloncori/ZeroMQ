@@ -9,7 +9,7 @@ print(" --> Collecting updates from weather server...")
 socket.connect("tcp://192.168.0.59:" + str(port))
 
 zipcode_filter = sys.argv[1] if len(sys.argv) > 1 else "10001"
-socket.setsockopt_string(zmq.SUBSCRIBE, zipcode_filter
+socket.setsockopt_string(zmq.SUBSCRIBE, zipcode_filter)
                          
 #process thirty updates
 total_temp = 0
